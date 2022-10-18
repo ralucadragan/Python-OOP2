@@ -1,37 +1,14 @@
-'''
-ABSTRACTION
-Clasa abstracta FormaGeometrica
-Contine un field PI=3.14
-Contine o metoda abstracta aria (optional)
-Contine o metoda a clasei descrie() - aceasta printeaza pe ecran ‘Cel mai probabil am colturi’
 
-INHERITANCE
-Clasa Patrat - mosteneste FormaGeometrica
-constructor pt latura
+from abc import ABC, abstractmethod
 
-ENCAPSULATION
-- latura este proprietate privata
-- Implementati getter, setter, deleter pt latura
-- Implementati metoda ceruta de interfata (optional, doar daca ati ales sa implementati metoda abstracta aria)
-
-- Clasa Cerc - mosteneste FormaGeometrica constructor pt raza
-- raza este proprietate privata
-- Implementati getter, setter, deleter pt raza
-- Implementati metoda ceruta de interfata - in calcul folositi field PI mostenit din clasa parinte
-- (optional, doar daca ati ales sa implementati metoda abstracta aria)
-
-POLYMORPHISM
-Definiti o noua metoda descrie - printati ‘Eu nu am colturi’
-'''
-
-class FormaGeometrica:
+class FormaGeometrica(ABC):
 
     def __init__(self):
         self.pi = 3.14
 
-    #def aria(self):
-        #aria = pi * self.raza * self.raza
-        #return(aria)
+    @abstractmethod
+    def aria(self):
+        pass
     def descriere(self):
         print('Cel mai probabil am colturi!')
 
@@ -47,6 +24,9 @@ class Patrat(FormaGeometrica):
     def del_latura(self):
         print(f'Am sters latura patratului.')
         self.__latura = None
+    def aria(self):
+        aria = self.__latura**2
+        return aria
 
 class Cerc(FormaGeometrica):
     def __init__(self, raza):
@@ -60,13 +40,20 @@ class Cerc(FormaGeometrica):
     def del_raza(self):
         print(f'Am sters latura cercului.')
         self.__raza = None
+    def aria(self):
+        aria = self.pi * self.__raza ** 2
+        return aria
 
 if __name__ == '__main__':
 
     p1 = Patrat(5)
     print(f'Latura patratului este de {p1.get_latura()} cm.')
+    p1.aria()
+    print(f'Aria patratului este de {p1.aria()} cmp.')
     p1.set_latura(7)
     print(f'Latura patratului modificat este de {p1.get_latura()} cm.')
+    p1.aria()
+    print(f'Aria patratului este de {p1.aria()} cmp.')
     p1.del_latura()
     print(f'Latura patratului este acum de {p1.get_latura()} cm.')
 
@@ -74,7 +61,14 @@ if __name__ == '__main__':
 
     r1 = Cerc(10)
     print(f'Raza cercului ese de {r1.get_raza()} cm.')
+    r1.aria()
+    print(f'Aria cercului este de {r1.aria()} cmp.')
     r1.set_raza(15)
-    print(f'Raza cercului modificat acre {r1.get_raza()} cm.')
+    print(f'Raza cercului modificat are {r1.get_raza()} cm.')
+    r1.aria()
+    print(f'Aria cercului este de {r1.aria()} cmp.')
     r1.del_raza()
     print(f'Latura patratului este acum de {r1.get_raza()} cm.')
+
+    print('----------------------------------------')
+
